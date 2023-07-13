@@ -11,7 +11,13 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"svelte": "^4.0.0",
+		"svelte-preprocess": "^5.0.4",
 		"vite": "^4.3.6"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/auth-helpers-sveltekit": "^0.9.4",
+		"@supabase/supabase-js": "^2.26.0",
+		"sass": "^1.63.6"
+	}
 }
