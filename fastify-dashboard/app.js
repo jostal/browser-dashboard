@@ -2,13 +2,18 @@
 
 const path = require('path')
 const AutoLoad = require('@fastify/autoload')
-
+const cors = require('@fastify/cors')
 // Pass --options via CLI arguments in command to enable these options.
 module.exports.options = {}
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
+  require('dotenv').config()
 
+  fastify.register(cors, {
+    origin: "*",
+    methods: ["GET", "POST", "OPTIONS"]
+  })
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins
