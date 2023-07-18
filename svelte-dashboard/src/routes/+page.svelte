@@ -5,6 +5,7 @@
   import { user, getConfig } from '../stores/UserStore.js' 
   import Auth from '../components/Auth.svelte'
   import Settings from '../components/Settings.svelte'
+  import Grid from '../components/Grid.svelte';
 
   export let data
   let { supabase } = data
@@ -47,11 +48,14 @@
   <div id="top-bar">
     <Settings supabase={supabase} configSupabase={configSupabase} />
   </div>
+
   {#if !$user.session}
     <div class="popup-bg">
       <Auth supabase={supabase} />
     </div>
   {/if}
+
+  <Grid supabase={supabase} />
 </main>
 
 <style lang="scss">
