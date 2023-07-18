@@ -1,6 +1,9 @@
 <script>
   import { user } from "../stores/UserStore";
+  import Appearance from "./Appearance.svelte";
+  
   export let supabase
+  export let configSupabase
 
   let handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -9,6 +12,7 @@
   }
 
   let showSettings = false
+  let currentSettings = 'Appearance'
 </script>
 
 <div class="settings-container">
@@ -20,9 +24,14 @@
       <div id="settings-popup" on:click|stopPropagation>
         <section id="settings-nav">
           <ul>
-            <li>Appearance</li>
+            <li class={currentSettings === 'Appearance' ? 'active' : ''} on:click={() => currentSettings = 'Appearance'}>Appearance</li>
             <li class="signout" on:click|stopPropagation={handleSignOut}>Sign Out <img src="logout.svg" alt="Sign out" /></li>
           </ul>
+        </section>
+        <section id="settings-view">
+          {#if currentSettings === 'Appearance'}
+            <Appearance supabase={supabase} configSupabase={configSupabase} />  
+          {/if}
         </section>
       </div>
     </div>
@@ -61,7 +70,8 @@
         background: var(--bg-color);
         border-radius: 0.5em;
         width: 90%;
-        height: 50%;
+        height: 70%;
+        display: flex;
 
         #settings-nav {
           width: 20%;
@@ -74,6 +84,7 @@
             margin: 0;
             padding: 0;
             list-style-type: none;
+            border-right: 1px solid black;
 
             li {
               width: calc(100% - 18px);
@@ -83,6 +94,10 @@
               border-right: 1px solid black;
               cursor: pointer;
               text-align: center;
+
+              &.active {
+                background: #cccccc;
+              }
               
               &:first-child {
                 border-top: 1px solid black;
@@ -103,6 +118,11 @@
               }
             }
           }
+        }
+
+        #settings-view {
+          padding: 10px;
+          width: 80%;
         }
       }
     }
