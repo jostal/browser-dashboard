@@ -82,10 +82,10 @@
 
 </script>
 
-<div class="app-wrapper">
+<div class="app-wrapper" draggable="false">
   {#if $globalState.editMode}
-    <div class="edit-app" on:click={() => showEdit = true}>
-      <img src={appConfig.icon} alt={`${app.name} icon`} />
+    <div class="edit-app" on:click={() => showEdit = true} draggable="false">
+      <img src={appConfig.icon} alt={`${app.name} icon`} draggable="false"/>
       <label>{app.name}</label>
     </div>
   {:else}
