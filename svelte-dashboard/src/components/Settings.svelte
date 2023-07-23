@@ -1,5 +1,6 @@
 <script>
   import { user } from "../stores/UserStore";
+  import { globalState } from "../stores/GlobalStore.js"
   import Appearance from "./Appearance.svelte";
   
   export let supabase
@@ -16,6 +17,9 @@
 </script>
 
 <div class="settings-container">
+  <button id="edit-toggle" on:click={() => $globalState.editMode = !$globalState.editMode}>
+    <img src={$globalState.editMode ? 'edit-off.svg' : 'edit.svg'} alt="Edit icon" />
+  </button>
   <button id="settings-toggle" on:click={() => showSettings = !showSettings}>
     <img src="settings.svg" alt="Settings icon" />
   </button>
@@ -42,7 +46,7 @@
   .settings-container {
     justify-self: flex-end;
 
-    #settings-toggle {
+    #settings-toggle, #edit-toggle {
       background: none;
       padding: 5px;
       border: none;
