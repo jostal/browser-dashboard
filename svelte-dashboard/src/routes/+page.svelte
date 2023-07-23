@@ -3,6 +3,7 @@
   import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
   import { createClient } from '@supabase/supabase-js';
   import { user, getConfig } from '../stores/UserStore.js' 
+  import { globalState } from '../stores/GlobalStore.js';
   import Auth from '../components/Auth.svelte'
   import Settings from '../components/Settings.svelte'
   import Grid from '../components/Grid.svelte';
@@ -10,6 +11,8 @@
   export let data
   let { supabase } = data
   $: ({ supabase } = data)
+
+  $globalState.supabase = supabase
 
   const configSupabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
     db: { schema: 'config' }
