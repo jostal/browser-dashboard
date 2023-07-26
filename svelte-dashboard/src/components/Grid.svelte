@@ -3,6 +3,7 @@
   import { globalState } from "../stores/GlobalStore";
   import App from './App.svelte'
   import NewApp from "./NewApp.svelte";
+  import Search from "./Search.svelte"
 
   export let supabase
 
@@ -60,6 +61,7 @@
 </script>
 
 <section id="app-grid">
+  <Search />
   {#each apps as app (app.app_order)}
     <div 
       class={app.app_order === parseInt(dragTarget) ? 'target app-container' : 'app-container'}
