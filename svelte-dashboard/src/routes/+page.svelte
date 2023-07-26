@@ -18,6 +18,8 @@
     db: { schema: 'config' }
   })
 
+  $globalState.configSupabase = configSupabase
+
   $user.session = data.session
 
   let loadConfig = async () => {

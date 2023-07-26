@@ -2,6 +2,7 @@
   import { user } from "../stores/UserStore";
   import { globalState } from "../stores/GlobalStore.js"
   import Appearance from "./Appearance.svelte";
+  import SearchSettings from "./SearchSettings.svelte"
   
   export let supabase
   export let configSupabase
@@ -29,12 +30,15 @@
         <section id="settings-nav">
           <ul>
             <li class={currentSettings === 'Appearance' ? 'active' : ''} on:click={() => currentSettings = 'Appearance'}>Appearance</li>
+            <li class={currentSettings === 'Search' ? 'active' : ''} on:click={() => currentSettings = 'Search'}>Search</li>
             <li class="signout" on:click|stopPropagation={handleSignOut}>Sign Out <img src="logout.svg" alt="Sign out" /></li>
           </ul>
         </section>
         <section id="settings-view">
           {#if currentSettings === 'Appearance'}
             <Appearance supabase={supabase} configSupabase={configSupabase} />  
+          {:else if currentSettings = 'Search'}
+            <SearchSettings /> 
           {/if}
         </section>
       </div>
