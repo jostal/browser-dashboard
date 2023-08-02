@@ -118,6 +118,14 @@
 <style lang="scss">
   .app-wrapper {
     display: inline-block;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+    color: white;
+    padding: 1em;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 1em;
+    }
 
     a, div {
       text-decoration: none;
@@ -131,6 +139,8 @@
       label {
         display: block;
         text-align: center;
+        margin-top: 7px;
+        cursor: pointer;
       }
     }
 

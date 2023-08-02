@@ -28,7 +28,7 @@
 
   // change user background
   let loadBackground = async () => {
-    const res = supabase.storage.from('backgrounds').getPublicUrl($user.config.background)
+    const res = supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
     let root = document.querySelector(':root')
     $: root.style.background = `url(${res.data.publicUrl})` 
   }
@@ -60,11 +60,20 @@
     </div>
   {/if}
 
-  <Grid supabase={supabase} />
+  <div id="grid-container">
+    <Grid supabase={supabase} />
+  </div>
 </main>
 
 <style lang="scss">
   main {
+
+    #grid-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
     #top-bar {
       width: 100%;
       height: 50px;

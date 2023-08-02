@@ -19,19 +19,20 @@
 
 <div class="settings-container">
   <button id="edit-toggle" on:click={() => $globalState.editMode = !$globalState.editMode}>
-    <img src={$globalState.editMode ? 'edit-off.svg' : 'edit.svg'} alt="Edit icon" />
+    <i class="material-symbols-outlined">{$globalState.editMode ? 'edit_off' : 'edit'}</i>
   </button>
   <button id="settings-toggle" on:click={() => showSettings = !showSettings}>
-    <img src="settings.svg" alt="Settings icon" />
+    <i class="material-symbols-outlined">settings</i>
   </button>
   {#if showSettings}
     <div class="popup-bg" on:click={() => showSettings = false}>
       <div id="settings-popup" on:click|stopPropagation>
+        <i class="material-symbols-outlined close" on:click={() => showSettings = false}>close</i>
         <section id="settings-nav">
           <ul>
             <li class={currentSettings === 'Appearance' ? 'active' : ''} on:click={() => currentSettings = 'Appearance'}>Appearance</li>
             <li class={currentSettings === 'Search' ? 'active' : ''} on:click={() => currentSettings = 'Search'}>Search</li>
-            <li class="signout" on:click|stopPropagation={handleSignOut}>Sign Out <img src="logout.svg" alt="Sign out" /></li>
+            <li class="signout" on:click|stopPropagation={handleSignOut}>Sign Out <i class="material-symbols-outlined">logout</i></li>
           </ul>
         </section>
         <section id="settings-view">
@@ -58,13 +59,17 @@
       height: 40px;
       cursor: pointer;
 
-      img {
-        width: 100%;
+      i {
+        font-size: 32px;
+        color: white;
+        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
       }
+
     }
 
     .popup-bg {
       position: absolute;
+      z-index: 10;
       left: 0;
       top: 0;
       width: 100vw;
@@ -80,6 +85,14 @@
         width: 90%;
         height: 70%;
         display: flex;
+        position: relative;
+
+        .close {
+          position: absolute;
+          right: 0.2em;
+          top: 0.2em;
+          cursor: pointer;
+        }
 
         #settings-nav {
           width: 20%;
@@ -92,14 +105,13 @@
             margin: 0;
             padding: 0;
             list-style-type: none;
-            border-right: 1px solid black;
+            border-right: 1px solid #7a7979;
 
             li {
-              width: calc(100% - 18px);
+              width: calc(100% - 17px);
               padding: 8px;
-              border-bottom: 1px solid black;
-              border-left: 1px solid black;
-              border-right: 1px solid black;
+              border-bottom: 1px solid #7a7979;
+              border-left: 1px solid #7a7979;
               cursor: pointer;
               text-align: center;
 
@@ -108,7 +120,7 @@
               }
               
               &:first-child {
-                border-top: 1px solid black;
+                border-top: 1px solid #7a7979;
                 border-radius: 0.5em 0 0 0;
               }
             }
@@ -120,8 +132,9 @@
               align-items: center;
               border-radius: 0 0 0 0.5em;
               margin-top: auto;
+              background: #f03a30;
               
-              img {
+              .settings {
                 margin-left: 8px;
               }
             }
@@ -129,8 +142,13 @@
         }
 
         #settings-view {
+          border: 1px solid #7a7979;
+          border-left: none;
+          border-radius: 0 0.5em 0.5em 0;
+          width: 80%; 
+          display: flex;
+          justify-content: center;
           padding: 10px;
-          width: 80%;
         }
       }
     }

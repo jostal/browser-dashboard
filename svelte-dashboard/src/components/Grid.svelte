@@ -61,7 +61,9 @@
 </script>
 
 <section id="app-grid">
-  <Search />
+  <div class="search-widget">
+    <Search />
+  </div>
   {#each apps as app (app.app_order)}
     <div 
       class={app.app_order === parseInt(dragTarget) ? 'target app-container' : 'app-container'}
@@ -84,8 +86,18 @@
 
 <style lang="scss">
   #app-grid {
+    flex-basis: 100%;
     display: flex;
-    gap: 40px;
+    row-gap: 40px;
+    column-gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    justify-content: center;
+
+    .search-widget {
+      width: 100%;
+      flex-basis: 100%;
+    }
 
     .target {
       opacity: 0.6;
