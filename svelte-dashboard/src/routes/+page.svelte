@@ -28,9 +28,14 @@
 
   // change user background
   let loadBackground = async () => {
-    const res = supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
     let root = document.querySelector(':root')
-    $: root.style.background = `url(${res.data.publicUrl})` 
+
+    if ($user.config.background.background_filepath) {
+      const res = supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
+      $: root.style.background = `url(${res.data.publicUrl})` 
+    } else {
+      $: root.style.background = `${$user.config.background.background_color}`
+    }
   }
 
   onMount(async () => {

@@ -1,5 +1,6 @@
 <script>
   import { user } from "../stores/UserStore";
+  import { globalState } from "../stores/GlobalStore";
   import ColorPicker from "svelte-awesome-color-picker"
 
   export let supabase
@@ -12,8 +13,12 @@
   let hex
 
   let getBackground = async () => {
-    let { data } = await supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
-    bgUrl = data.publicUrl
+    if ($user.config.background.background_filepath) {
+      let { data } = await supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
+      bgUrl = data.publicUrl
+    } else {
+      bgUrl = false
+    }
   }
 
   let uploadFile = (file) => {
@@ -36,23 +41,43 @@
         console.error(updateRes.error)
       } else {
         $user.refresh = true
+        showUpload = false
       }
     }
 
   }
 
   let setBackgroundColor = async () => {
+    const data = await $globalState.configSupabase.rpc('change_background_color', {
+      user_uuid: $user.session.user.id,
+      color: hex
+    })
 
+    if (data.error) {
+      console.error(data.error)
+    } else {
+      $user.refresh = true
+      showUpload = false
+      getBackground()
+    }
   }
 
   getBackground()
+
+  $: if (($user.config.background.background_filepath && !bgUrl) || ($user.config.background.background_color && bgUrl)) {
+    getBackground()
+  }
 
 </script>
 
 <div class="settings">
   <h1>Appearance Settings</h1>
   <div class="img-preview" on:click={() => showUpload = true}>
-    <img src={bgUrl} alt="Selected background" />
+    {#if bgUrl}
+      <img src={bgUrl} alt="Selected background" />
+    {:else}
+      <div style={`background:${$user.config.background.background_color}`} class="bg-preview"></div>
+    {/if}
     <div class="img-hover">Change Background</div>
   </div>
 
@@ -101,8 +126,14 @@
         height: 100%;
       }
 
+      div {
+        width: 100%;
+        height: 100%;
+      }
+
       .img-hover {
         width: calc(100% - 20px);
+        height: fit-content;
         text-align: center;
         color: white;
         position: absolute;

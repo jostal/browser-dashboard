@@ -121,6 +121,7 @@
     text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
     color: white;
     padding: 1em;
+    cursor: pointer;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.2);

@@ -38,14 +38,23 @@
     iconPath = null
   }
 
+  $: console.log(showCreate)
+
 </script>
 
-<div id="newApp" class="app-wrapper" on:click={() => showCreate = true}>
-  <button>+</button>
+<div id="newApp" class="app-wrapper">
+  <div class="new-app-wrapper" on:click={() => showCreate = true}>
+    <i class="material-symbols-outlined">add_circle</i>
+    <label>New App</label> 
+  </div>
 
   {#if showCreate}
-    <div class="popup-bg">
-      <div id="edit-app-popup">
+    <div class="popup-bg" on:click={() => showCreate = false}>
+      <div id="edit-app-popup" on:click|stopPropagation>
+        <h1>Add New App</h1>
+
+        <i class="material-symbols-outlined close" on:click={() => showCreate = false}>close</i>
+
         <label for="app-name">Name</label>
         <input type="text" name="app-name" value={appConfig.name} on:change={(e) => appConfig.name = e.target.value} />
 
@@ -70,6 +79,31 @@
   .app-wrapper {
     display: inline-block;
 
+    .new-app-wrapper {
+      cursor: pointer;
+      padding: 1em;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 1em;
+      }
+
+      i {
+        font-size: 64px;
+        color: white;
+        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+      }
+
+      label {
+        color: white;
+        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+        display: block;
+        text-align: center;
+        margin-top: 7px;
+        cursor: pointer;
+      }
+    }
+
     .popup-bg {
       position: absolute;
       top: 0;
@@ -85,6 +119,15 @@
         background: var(--bg-color);
         border-radius: 0.5em;
         padding: 10px;
+        position: relative;
+
+        .close {
+          position: absolute;
+          right: 0.2em;
+          top: 0.2em;
+          cursor: pointer;
+        }
+
 
         img {
           width: 64px;
