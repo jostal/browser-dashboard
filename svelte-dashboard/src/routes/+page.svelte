@@ -47,10 +47,21 @@
     }
   };
 
+  let setDarkMode = () => {
+    let root = document.querySelector("body");
+
+    if ($user.config.dark_mode) {
+      root.classList.remove("light");
+    } else {
+      root.classList.add("light");
+    }
+  };
+
   onMount(async () => {
     if ($user.session) {
       await loadConfig();
       loadBackground();
+      setDarkMode();
     }
   });
 
@@ -60,21 +71,22 @@
     if ($user.refresh) {
       await loadConfig();
       loadBackground();
+      setDarkMode();
       $user.refresh = false;
     }
   };
 </script>
 
 <main>
-  <div id="top-bar">
-    <Settings {supabase} {configSupabase} />
-  </div>
-
   {#if !$user.session}
     <div class="popup-bg">
       <Auth {supabase} />
     </div>
   {:else}
+    <div id="top-bar">
+      <Settings {supabase} {configSupabase} />
+    </div>
+
     <div id="grid-container">
       <Grid {supabase} />
     </div>

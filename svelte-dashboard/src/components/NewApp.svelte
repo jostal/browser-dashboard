@@ -124,13 +124,11 @@
 
       i {
         font-size: 64px;
-        color: white;
-        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+        text-shadow: var(--text-shadow);
       }
 
       label {
-        color: white;
-        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+        text-shadow: var(--text-shadow);
         display: block;
         text-align: center;
         margin-top: 7px;
@@ -172,6 +170,8 @@
           label {
             padding: 0.5em;
             border: 1px solid black;
+            background: var(--contrast-bg);
+            color: var(--bg-color);
             display: flex;
             align-items: center;
             justify-content: center;

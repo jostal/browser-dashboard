@@ -1,45 +1,84 @@
 <script>
   import { user } from "../stores/UserStore";
-  import { globalState } from "../stores/GlobalStore.js"
+  import { globalState } from "../stores/GlobalStore.js";
   import Appearance from "./Appearance.svelte";
-  import SearchSettings from "./SearchSettings.svelte"
-  
-  export let supabase
-  export let configSupabase
+  import SearchSettings from "./SearchSettings.svelte";
+
+  export let supabase;
+  export let configSupabase;
 
   let handleSignOut = async () => {
-    await supabase.auth.signOut()
-    $user.session = null
-    showSettings = false
-  }
+    await supabase.auth.signOut();
+    $user.session = null;
+    showSettings = false;
+  };
 
-  let showSettings = false
-  let currentSettings = 'Appearance'
+  let toggleDarkMode = async () => {
+    await configSupabase.rpc("toggle_dark_mode", {
+      user_uuid: $user.session.user.id,
+      is_dark: !$user.config.dark_mode,
+    });
+
+    $user.refresh = true;
+  };
+
+  let showSettings = false;
+  let currentSettings = "Appearance";
 </script>
 
 <div class="settings-container">
-  <button id="edit-toggle" on:click={() => $globalState.editMode = !$globalState.editMode}>
-    <i class="material-symbols-outlined">{$globalState.editMode ? 'edit_off' : 'edit'}</i>
+  <button id="dark-toggle" on:click={toggleDarkMode}>
+    {#if $user.config?.dark_mode}
+      <i title="Enable light mode" class="material-symbols-outlined"
+        >light_mode</i
+      >
+    {:else}
+      <i title="Enable dark mode" class="material-symbols-outlined">dark_mode</i
+      >
+    {/if}
   </button>
-  <button id="settings-toggle" on:click={() => showSettings = !showSettings}>
-    <i class="material-symbols-outlined">settings</i>
+  <button
+    id="edit-toggle"
+    on:click={() => ($globalState.editMode = !$globalState.editMode)}
+  >
+    <i class="material-symbols-outlined" title="Toggle edit mode"
+      >{$globalState.editMode ? "edit_off" : "edit"}</i
+    >
+  </button>
+  <button id="settings-toggle" on:click={() => (showSettings = !showSettings)}>
+    <i class="material-symbols-outlined" title="Open settings">settings</i>
   </button>
   {#if showSettings}
-    <div class="popup-bg" on:click={() => showSettings = false}>
+    <div class="popup-bg" on:click={() => (showSettings = false)}>
       <div id="settings-popup" on:click|stopPropagation>
-        <i class="material-symbols-outlined close" on:click={() => showSettings = false}>close</i>
+        <i
+          class="material-symbols-outlined close"
+          on:click={() => (showSettings = false)}>close</i
+        >
         <section id="settings-nav">
           <ul>
-            <li class={currentSettings === 'Appearance' ? 'active' : ''} on:click={() => currentSettings = 'Appearance'}>Appearance</li>
-            <li class={currentSettings === 'Search' ? 'active' : ''} on:click={() => currentSettings = 'Search'}>Search</li>
-            <li class="signout" on:click|stopPropagation={handleSignOut}>Sign Out <i class="material-symbols-outlined">logout</i></li>
+            <li
+              class={currentSettings === "Appearance" ? "active" : ""}
+              on:click={() => (currentSettings = "Appearance")}
+            >
+              Appearance
+            </li>
+            <li
+              class={currentSettings === "Search" ? "active" : ""}
+              on:click={() => (currentSettings = "Search")}
+            >
+              Search
+            </li>
+            <li class="signout" on:click|stopPropagation={handleSignOut}>
+              Sign Out <i class="material-symbols-outlined">logout</i>
+            </li>
           </ul>
         </section>
         <section id="settings-view">
-          {#if currentSettings === 'Appearance'}
-            <Appearance supabase={supabase} configSupabase={configSupabase} />  
-          {:else if currentSettings = 'Search'}
-            <SearchSettings /> 
+          {#if currentSettings === "Appearance"}
+            <Appearance {supabase} {configSupabase} />
+          {:else if (currentSettings = "Search")}
+            <SearchSettings />
           {/if}
         </section>
       </div>
@@ -51,20 +90,21 @@
   .settings-container {
     justify-self: flex-end;
 
-    #settings-toggle, #edit-toggle {
+    #settings-toggle,
+    #edit-toggle,
+    #dark-toggle {
       background: none;
       padding: 5px;
       border: none;
       width: 40px;
       height: 40px;
       cursor: pointer;
+      color: inherit;
 
       i {
         font-size: 32px;
-        color: white;
-        text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+        text-shadow: var(--text-shadow);
       }
-
     }
 
     .popup-bg {
@@ -105,47 +145,49 @@
             margin: 0;
             padding: 0;
             list-style-type: none;
-            border-right: 1px solid #7a7979;
+            border-right: 1px solid var(--bg-border);
 
             li {
+              font-weight: bold;
               width: calc(100% - 17px);
               padding: 8px;
-              border-bottom: 1px solid #7a7979;
-              border-left: 1px solid #7a7979;
+              border-bottom: 1px solid var(--bg-border);
+              border-left: 1px solid var(--bg-border);
               cursor: pointer;
               text-align: center;
 
               &.active {
-                background: #cccccc;
+                background: var(--selected);
               }
-              
+
               &:first-child {
-                border-top: 1px solid #7a7979;
+                border-top: 1px solid var(--bg-border);
                 border-radius: 0.5em 0 0 0;
               }
             }
 
             .signout {
-              border-top: 1px solid black;
+              border-top: 1px solid var(--bg-border);
               display: flex;
               justify-content: center;
               align-items: center;
               border-radius: 0 0 0 0.5em;
               margin-top: auto;
               background: #f03a30;
-              
-              .settings {
-                margin-left: 8px;
+              color: white;
+
+              i {
+                margin-left: 5px;
               }
             }
           }
         }
 
         #settings-view {
-          border: 1px solid #7a7979;
+          border: 1px solid var(--bg-border);
           border-left: none;
           border-radius: 0 0.5em 0.5em 0;
-          width: 80%; 
+          width: 80%;
           display: flex;
           justify-content: center;
           padding: 10px;

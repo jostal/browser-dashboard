@@ -1,104 +1,122 @@
 <script>
   import { user } from "../stores/UserStore";
   import { globalState } from "../stores/GlobalStore";
-  import ColorPicker from "svelte-awesome-color-picker"
+  import ColorPicker from "svelte-awesome-color-picker";
 
-  export let supabase
-  export let configSupabase
+  export let supabase;
+  export let configSupabase;
 
-  let bgUrl
-  let showUpload = false
-  let uploadedFile
-  let imagePreview
-  let hex
+  let bgUrl;
+  let showUpload = false;
+  let uploadedFile;
+  let imagePreview;
+  let hex;
 
   let getBackground = async () => {
     if ($user.config.background.background_filepath) {
-      let { data } = await supabase.storage.from('backgrounds').getPublicUrl($user.config.background.background_filepath)
-      bgUrl = data.publicUrl
+      let { data } = await supabase.storage
+        .from("backgrounds")
+        .getPublicUrl($user.config.background.background_filepath);
+      bgUrl = data.publicUrl;
     } else {
-      bgUrl = false
+      bgUrl = false;
     }
-  }
+  };
 
   let uploadFile = (file) => {
-    uploadedFile = file
-    imagePreview = URL.createObjectURL(file)
-  }
+    uploadedFile = file;
+    imagePreview = URL.createObjectURL(file);
+  };
 
   let changeBackground = async () => {
-    let curDate = Date.now()
-    const uploadRes = await supabase.storage.from('backgrounds').upload(`${curDate}-${uploadedFile.name}`, uploadedFile)
+    let curDate = Date.now();
+    const uploadRes = await supabase.storage
+      .from("backgrounds")
+      .upload(`${curDate}-${uploadedFile.name}`, uploadedFile);
     if (uploadRes.error) {
-      console.error(uploadRes.error)
+      console.error(uploadRes.error);
     } else {
-      const updateRes = await configSupabase.rpc('change_background_image', { 
+      const updateRes = await configSupabase.rpc("change_background_image", {
         user_uuid: $user.session.user.id,
-        background_path: curDate + '-' + uploadedFile.name
-      }) 
+        background_path: curDate + "-" + uploadedFile.name,
+      });
 
       if (updateRes.error) {
-        console.error(updateRes.error)
+        console.error(updateRes.error);
       } else {
-        $user.refresh = true
-        showUpload = false
+        $user.refresh = true;
+        showUpload = false;
       }
     }
-
-  }
+  };
 
   let setBackgroundColor = async () => {
-    const data = await $globalState.configSupabase.rpc('change_background_color', {
-      user_uuid: $user.session.user.id,
-      color: hex
-    })
+    const data = await $globalState.configSupabase.rpc(
+      "change_background_color",
+      {
+        user_uuid: $user.session.user.id,
+        color: hex,
+      }
+    );
 
     if (data.error) {
-      console.error(data.error)
+      console.error(data.error);
     } else {
-      $user.refresh = true
-      showUpload = false
-      getBackground()
+      $user.refresh = true;
+      showUpload = false;
+      getBackground();
     }
+  };
+
+  getBackground();
+
+  $: if (
+    ($user.config.background.background_filepath && !bgUrl) ||
+    ($user.config.background.background_color && bgUrl)
+  ) {
+    getBackground();
   }
-
-  getBackground()
-
-  $: if (($user.config.background.background_filepath && !bgUrl) || ($user.config.background.background_color && bgUrl)) {
-    getBackground()
-  }
-
 </script>
 
 <div class="settings">
   <h1>Appearance Settings</h1>
-  <div class="img-preview" on:click={() => showUpload = true}>
+  <div class="img-preview" on:click={() => (showUpload = true)}>
     {#if bgUrl}
       <img src={bgUrl} alt="Selected background" />
     {:else}
-      <div style={`background:${$user.config.background.background_color}`} class="bg-preview"></div>
+      <div
+        style={`background:${$user.config.background.background_color}`}
+        class="bg-preview"
+      />
     {/if}
     <div class="img-hover">Change Background</div>
   </div>
 
   {#if showUpload}
-    <div class="popup-bg" on:click={() => showUpload = false}>
+    <div class="popup-bg" on:click={() => (showUpload = false)}>
       <div class="background-settings" on:click|stopPropagation>
-        <i class="material-symbols-outlined close" on:click={() => showUpload = false}>close</i>
+        <i
+          class="material-symbols-outlined close"
+          on:click={() => (showUpload = false)}>close</i
+        >
 
         <div class="color-dialog">
           <h2>Set Background Color</h2>
           <div class="color-picker">
             <ColorPicker bind:hex canChangeMode={false} isAlpha={false} />
           </div>
-          <button on:click={setBackgroundColor}>Set As Background</button> 
+          <button on:click={setBackgroundColor}>Set As Background</button>
         </div>
 
         <hr />
 
         <div class="upload-dialog">
           <h2>Upload Background Image</h2>
-          <input type="file" accept="image/*" on:input={(e) => uploadFile(e.target.files[0])} />
+          <input
+            type="file"
+            accept="image/*"
+            on:input={(e) => uploadFile(e.target.files[0])}
+          />
           {#if imagePreview}
             <img src={imagePreview} />
             <button on:click={changeBackground}>Upload</button>
@@ -139,8 +157,14 @@
         position: absolute;
         bottom: 0px;
         padding: 10px;
-        background: rgb(0,0,0);
-        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 55%, rgba(0,0,0,0.4) 81%, rgba(0,0,0,0.2) 100%); 
+        background: rgb(0, 0, 0);
+        background: linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 0.8) 55%,
+          rgba(0, 0, 0, 0.4) 81%,
+          rgba(0, 0, 0, 0.2) 100%
+        );
       }
     }
 
@@ -205,7 +229,6 @@
           }
         }
       }
-
     }
   }
 </style>

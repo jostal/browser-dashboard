@@ -173,13 +173,12 @@
 <style lang="scss">
   .app-wrapper {
     display: inline-block;
-    text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
-    color: white;
+    text-shadow: var(--text-shadow);
     padding: 1em;
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: var(--hover);
       border-radius: 1em;
     }
 
@@ -198,6 +197,7 @@
         text-align: center;
         margin-top: 7px;
         cursor: pointer;
+        font-weight: bold;
       }
     }
 
@@ -217,7 +217,6 @@
         border-radius: 0.5em;
         padding: 10px;
         position: relative;
-        color: black;
         text-shadow: none;
         cursor: default;
 
@@ -250,6 +249,8 @@
               border: 1px solid black;
               width: fit-content;
               margin: 0;
+              background: var(--contrast-bg);
+              color: var(--bg-color);
 
               .upload {
                 margin-right: 5px;
