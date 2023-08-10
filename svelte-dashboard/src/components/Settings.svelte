@@ -3,6 +3,7 @@
   import { globalState } from "../stores/GlobalStore.js";
   import Appearance from "./Appearance.svelte";
   import SearchSettings from "./SearchSettings.svelte";
+  import WidgetSettings from "./WidgetSettings.svelte";
 
   export let supabase;
   export let configSupabase;
@@ -69,6 +70,12 @@
             >
               Search
             </li>
+            <li
+              class={currentSettings === "Widgets" ? "active" : ""}
+              on:click={() => (currentSettings = "Widgets")}
+            >
+              Widgets
+            </li>
             <li class="signout" on:click|stopPropagation={handleSignOut}>
               Sign Out <i class="material-symbols-outlined">logout</i>
             </li>
@@ -77,8 +84,10 @@
         <section id="settings-view">
           {#if currentSettings === "Appearance"}
             <Appearance {supabase} {configSupabase} />
-          {:else if (currentSettings = "Search")}
+          {:else if currentSettings === "Search"}
             <SearchSettings />
+          {:else if currentSettings === "Widgets"}
+            <WidgetSettings />
           {/if}
         </section>
       </div>
