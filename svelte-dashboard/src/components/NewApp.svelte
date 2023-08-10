@@ -44,7 +44,7 @@
 <div id="newApp" class="app-wrapper">
   <div class="new-app-wrapper" on:click={() => (showCreate = true)}>
     <i class="material-symbols-outlined">add_circle</i>
-    <label>New App</label>
+    <label><strong>New App</strong></label>
   </div>
 
   {#if showCreate}
@@ -84,7 +84,7 @@
           />
 
           <div class="icon-preview">
-            <label for="icon"
+            <label for="icon-upload"
               ><i class="material-symbols-outlined upload">upload</i>Upload
               Custom Icon</label
             >
@@ -93,6 +93,7 @@
             {/if}
             <input
               name="icon"
+              id="icon-upload"
               type="file"
               accept="image/*"
               on:input={(e) => (iconFile = e.target.files[0])}
