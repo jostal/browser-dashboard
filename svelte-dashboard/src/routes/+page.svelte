@@ -60,7 +60,7 @@
   onMount(async () => {
     if ($user.session) {
       await loadConfig();
-      loadBackground();
+      await loadBackground();
       setDarkMode();
     }
   });
@@ -70,7 +70,7 @@
   let refreshConfig = async () => {
     if ($user.refresh) {
       await loadConfig();
-      loadBackground();
+      await loadBackground();
       setDarkMode();
       $user.refresh = false;
     }

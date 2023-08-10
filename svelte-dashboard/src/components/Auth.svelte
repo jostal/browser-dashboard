@@ -1,68 +1,80 @@
 <script>
-  import { env } from '$env/dynamic/public'
-  import ThirdPartyAuth from './ThirdPartyAuth.svelte'
+  import { env } from "$env/dynamic/public";
+  import ThirdPartyAuth from "./ThirdPartyAuth.svelte";
   import { user } from "../stores/UserStore";
 
-  export let supabase
+  export let supabase;
 
-  let authType = 'Register'
-  let error = ""
+  let authType = "Register";
+  let error = "";
 
   let handleAuth = async (formEl) => {
-    let formData = new FormData(formEl)
+    let formData = new FormData(formEl);
 
     if (authType === "Sign In") {
       let res = await supabase.auth.signInWithPassword({
-        email: formData.get('email'),
-        password: formData.get('password')
-      }) 
+        email: formData.get("email"),
+        password: formData.get("password"),
+      });
 
       if (res.error) {
-        error = res.error.message
+        error = res.error.message;
       } else {
-        $user.session = res.data
+        $user.session = res.data;
+        $user.refresh = true;
       }
-    } 
+    }
 
     if (authType === "Register") {
       if (validateCredentials(formData)) {
-        error = ""
+        error = "";
         let res = await supabase.auth.signUp({
-          email: formData.get('email'),
-          password: formData.get('password'),
+          email: formData.get("email"),
+          password: formData.get("password"),
           options: {
-            emailRedirectTo: `${location.origin}/auth/callback`
-          }
-        })
+            emailRedirectTo: `${location.origin}/auth/callback`,
+          },
+        });
 
         if (res.error) {
-          error = res.error.message
+          error = res.error.message;
         } else {
-          $user.session = res.data
+          $user.session = res.data;
+          $user.refresh = true;
         }
       } else {
-        error = "Passwords must match"
+        error = "Passwords must match";
       }
     }
-  }
+  };
 
   let validateCredentials = (formData) => {
-    if (formData.get('password') !== formData.get('confirmPassword')) {
-      return false
+    if (formData.get("password") !== formData.get("confirmPassword")) {
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
-  let handleThirdPartyAuth = (provider) => {
-
-  }
+  let handleThirdPartyAuth = (provider) => {};
 </script>
 
 <section id="auth-form">
   <div class="button-group">
-    <button on:click={() => {authType = 'Sign In'; error = ""}} class={authType === 'Sign In' ? 'active' : ''}>Sign In</button>
-    <button on:click={() => {authType = 'Register'; error = ""}} class={authType === 'Register' ? 'active' : ''}>Register</button>
+    <button
+      on:click={() => {
+        authType = "Sign In";
+        error = "";
+      }}
+      class={authType === "Sign In" ? "active" : ""}>Sign In</button
+    >
+    <button
+      on:click={() => {
+        authType = "Register";
+        error = "";
+      }}
+      class={authType === "Register" ? "active" : ""}>Register</button
+    >
   </div>
 
   <form on:submit|preventDefault={(e) => handleAuth(e.target)}>
@@ -71,7 +83,7 @@
       <p class="error"><strong>Error: </strong>{error}</p>
     {/if}
 
-    {#if authType === 'Sign In'}
+    {#if authType === "Sign In"}
       <label for="email">Email</label>
       <input name="email" type="email" />
 
@@ -80,7 +92,7 @@
 
       <button type="submit">{authType}</button>
     {:else}
-      <label for="email">Email</label> 
+      <label for="email">Email</label>
       <input name="email" type="email" />
 
       <label for="password">Password</label>
@@ -109,7 +121,7 @@
       display: flex;
       width: 100%;
       font-size: 16px;
-      
+
       button {
         width: 50%;
         padding: 8px;

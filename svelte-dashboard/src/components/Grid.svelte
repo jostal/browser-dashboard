@@ -20,10 +20,12 @@
     if (error) console.error(error);
     apps = data;
 
-    // sort apps
-    apps.sort((a, b) => {
-      return a.app_order - b.app_order;
-    });
+    if (apps) {
+      // sort apps
+      apps.sort((a, b) => {
+        return a.app_order - b.app_order;
+      });
+    }
 
     apps = apps;
   }
@@ -72,24 +74,26 @@
   <div class="search-widget">
     <Search />
   </div>
-  {#each apps as app (app.app_order)}
-    <div
-      class={app.app_order === parseInt(dragTarget)
-        ? "target app-container"
-        : "app-container"}
-      key={app.app_order}
-      id={app.id}
-      draggable={$globalState.editMode ? "true" : "false"}
-      on:dragstart={handleDragStart}
-      on:dragover|preventDefault={handleDragOver}
-      on:dragenter|preventDefault
-      on:dragend={handleDragEnd}
-      on:drop={handleDrop}
-    >
-      <App bind:app refreshApps={getApps} />
-    </div>
-  {/each}
-  {#if $globalState.editMode}
+  {#if apps}
+    {#each apps as app (app.app_order)}
+      <div
+        class={app.app_order === parseInt(dragTarget)
+          ? "target app-container"
+          : "app-container"}
+        key={app.app_order}
+        id={app.id}
+        draggable={$globalState.editMode ? "true" : "false"}
+        on:dragstart={handleDragStart}
+        on:dragover|preventDefault={handleDragOver}
+        on:dragenter|preventDefault
+        on:dragend={handleDragEnd}
+        on:drop={handleDrop}
+      >
+        <App bind:app refreshApps={getApps} />
+      </div>
+    {/each}
+  {/if}
+  {#if $globalState.editMode || !apps}
     <NewApp refreshApps={getApps} />
   {/if}
 </section>

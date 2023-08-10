@@ -119,52 +119,55 @@
           on:click={() => (showEdit = false)}>close</i
         >
         <h1>Edit App Details</h1>
-        <div class="icon-preview">
-          <h2>Change Icon</h2>
-          <div class="icon-upload">
-            <img
-              src={newIconPreview ? newIconPreview : appConfig.icon}
-              alt={`${app.name} icon`}
-            />
-            <div class="icon-actions">
-              <label for="app-icon-upload"
-                ><i class="material-symbols-outlined upload">upload</i>Upload
-                Icon</label
-              >
-              <button on:click={useDefaultIcon}>Use Default Icon</button>
+        <form on:submit={updateApp}>
+          <div class="icon-preview">
+            <h2>Change Icon</h2>
+            <div class="icon-upload">
+              <img
+                src={newIconPreview ? newIconPreview : appConfig.icon}
+                alt={`${app.name} icon`}
+              />
+              <div class="icon-actions">
+                <label for="app-icon-upload"
+                  ><i class="material-symbols-outlined upload">upload</i>Upload
+                  Icon</label
+                >
+                <button on:click={useDefaultIcon}>Use Default Icon</button>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                id="app-icon-upload"
+                on:input={(e) => uploadIcon(e)}
+              />
             </div>
-            <input
-              type="file"
-              accept="image/*"
-              id="app-icon-upload"
-              on:input={(e) => uploadIcon(e)}
-            />
           </div>
-        </div>
-        <h2>Change Info</h2>
-        <label for="app-url">URL</label>
-        <input
-          type="url"
-          name="app-url"
-          value={appConfig.url}
-          on:change={(e) => (appConfig.url = e.target.value)}
-        />
-        <label for="app-name">Name</label>
-        <input
-          type="text"
-          name="app-name"
-          value={appConfig.name}
-          on:change={(e) => (appConfig.name = e.target.value)}
-        />
+          <h2>Change Info</h2>
+          <label for="app-url">URL</label>
+          <input
+            type="url"
+            name="app-url"
+            value={appConfig.url}
+            on:change={(e) => (appConfig.url = e.target.value)}
+            required
+          />
+          <label for="app-name">Name</label>
+          <input
+            type="text"
+            name="app-name"
+            value={appConfig.name}
+            on:change={(e) => (appConfig.name = e.target.value)}
+          />
 
-        <div class="btn-actions">
-          <button type="button" class="btn-save" on:click={updateApp}
-            ><i class="material-symbols-outlined">save</i>Save</button
-          >
-          <button type="button" class="btn-delete" on:click={deleteApp}
-            ><i class="material-symbols-outlined">delete</i>Delete App</button
-          >
-        </div>
+          <div class="btn-actions">
+            <button type="submit" class="btn-save"
+              ><i class="material-symbols-outlined">save</i>Save</button
+            >
+            <button type="button" class="btn-delete" on:click={deleteApp}
+              ><i class="material-symbols-outlined">delete</i>Delete App</button
+            >
+          </div>
+        </form>
       </div>
     </div>
   {/if}
