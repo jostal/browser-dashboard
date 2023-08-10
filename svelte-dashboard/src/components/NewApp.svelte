@@ -39,8 +39,6 @@
     iconFile = null;
     iconPath = null;
   };
-
-  $: console.log(showCreate);
 </script>
 
 <div id="newApp" class="app-wrapper">
@@ -74,13 +72,14 @@
             type="url"
             name="app-url"
             value={appConfig.url}
-            on:change={(e) => (appConfig.url = e.target.value)}
+            on:change={(e) => {
+              appConfig.url = e.target.value;
+              e.target.setCustomValidity("");
+            }}
             on:invalid={(e) =>
               e.target.setCustomValidity(
                 "Please enter a URL. Make sure to include the protocol (https://, etc...)"
               )}
-            on:valid={(e) =>
-              e.target.setCustomValidity("this.setCustomValidity('')")}
             required
           />
 
