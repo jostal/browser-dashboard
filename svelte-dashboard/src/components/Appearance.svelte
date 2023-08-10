@@ -80,6 +80,7 @@
 
 <div class="settings">
   <h1>Appearance Settings</h1>
+  <hr />
   <div class="img-preview" on:click={() => (showUpload = true)}>
     {#if bgUrl}
       <img src={bgUrl} alt="Selected background" />
@@ -133,7 +134,12 @@
     flex-direction: column;
     align-items: center;
 
+    hr {
+      width: 100%;
+    }
+
     .img-preview {
+      margin-top: 1em;
       position: relative;
       height: 113px;
       width: 200px;

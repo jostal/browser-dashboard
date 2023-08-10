@@ -27,6 +27,7 @@
 
 <div class="settings">
   <h1>Search Settings</h1>
+  <hr />
   <label for="searchEngine">Preferred Search Engine</label>
   <select name="searchEngine">
     {#each engines as engine}
@@ -42,6 +43,7 @@
 <style lang="scss">
   .settings {
     label {
+      margin-top: 1em;
       display: block;
     }
 
