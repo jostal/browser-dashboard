@@ -66,7 +66,7 @@
 </script>
 
 <section id="app-grid">
-  {#if $user.config?.clock.show_clock}
+  {#if $user.config?.clock.show_clock || $user.config?.clock.show_date}
     <div class="time-widget">
       <Time is24Hour={$user.config.clock.use_24h_clock} />
     </div>

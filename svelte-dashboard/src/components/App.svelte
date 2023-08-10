@@ -100,12 +100,16 @@
 
 <div class="app-wrapper" draggable="false">
   {#if $globalState.editMode}
-    <div class="edit-app" on:click={() => (showEdit = true)} draggable="false">
+    <div
+      class="edit-app app"
+      on:click={() => (showEdit = true)}
+      draggable="false"
+    >
       <img src={appConfig.icon} alt={`${app.name} icon`} draggable="false" />
       <label>{app.name}</label>
     </div>
   {:else}
-    <a href={app.url}>
+    <a href={app.url} class="app">
       <img src={appConfig.icon} alt={`${app.name} icon`} />
       <label>{app.name}</label>
     </a>
@@ -185,10 +189,15 @@
       border-radius: 1em;
     }
 
-    a,
-    div {
+    .app {
       text-decoration: none;
       color: inherit;
+      width: 72px;
+      height: 100px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       img {
         width: 64px;
@@ -196,11 +205,19 @@
       }
 
       label {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        position: absolute;
+        bottom: 0;
         display: block;
         text-align: center;
-        margin-top: 7px;
         cursor: pointer;
         font-weight: bold;
+        width: calc(72px + 1em);
+        line-height: 2;
+        overflow: hidden;
+        text-overflow: "..";
+        white-space: nowrap;
       }
     }
 

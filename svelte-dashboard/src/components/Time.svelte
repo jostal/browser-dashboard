@@ -25,12 +25,16 @@
 </script>
 
 <div class="time-container">
-  <div class="date" style={`font-size: ${$user.config.clock.date_size}em`}>
-    {formattedDate}
-  </div>
-  <div class="time" style={`font-size: ${$user.config.clock.time_size}em`}>
-    {time}
-  </div>
+  {#if $user.config.clock.show_date}
+    <div class="date" style={`font-size: ${$user.config.clock.date_size}em`}>
+      {formattedDate}
+    </div>
+  {/if}
+  {#if $user.config.clock.show_clock}
+    <div class="time" style={`font-size: ${$user.config.clock.time_size}em`}>
+      {time}
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
