@@ -1,6 +1,17 @@
 # [Dashboard](https://dashboard.josephtalon.ca)
 This web app is intended to be used as a homepage for the browser. It allows the user to create a homepage environment customized to their needs.
 
+## Table of Contents
+* [Features](#features)
+  + [Change background](#change-background)
+  + [Toggle dark mode](#toggle-dark-mode)
+  + [Add and customize any shortcut](#add-and-customize-any-shortcut)
+  + [Change search engines](#change-search-engines)
+  + [Toggle date and time](#toggle-date-and-time)
+* [Planned Features](#planned-features)
+* [Technology](#technology)
+
+
 ## Features
 ### Change background
 The user can change the background to any color or upload their own wallpaper.
