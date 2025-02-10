@@ -18,28 +18,28 @@ The user can change the background to any color or upload their own wallpaper.
 
 | Color selection | Applied color |
 | ---- | ---- |
-| ![color selection](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/color-select.png) | ![applied color](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/color-applied.png) |
+| ![color selection](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/color-select.png) | ![applied color](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/color-applied.png) |
 
 | Wallpaper selection | Applied wallpaper |
 | ---- | ---- |
-| ![wallpaper selection](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/wallpaper-select.png) | ![applied wallpaper](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/wallpaper-applied.png)
+| ![wallpaper selection](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/wallpaper-select.png) | ![applied wallpaper](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/wallpaper-applied.png)
 
 ### Toggle dark mode
 
 | Dark mode | Light mode |
 | --- | --- |
-| ![dark mode enabled](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/dark-mode.png) | ![light mode enabled](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/light-mode.png) |
+| ![dark mode enabled](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/dark-mode.png) | ![light mode enabled](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/light-mode.png) |
 
 ### Add and customize any shortcut
 Add a shortcut to any URL and use a custom icon and name. Shortcuts can also be reordered with drag and drop when in edit mode.
 
 | Create shortcut menu | New shortcut on grid |
 | --- | --- |
-| ![create shortcut menu](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/create-app.png) | ![new shortcut on grid](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/new-app.png) |
+| ![create shortcut menu](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/create-app.png) | ![new shortcut on grid](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/new-app.png) |
 
 | Upload custom icon | Custom icon applied |
 | --- | --- |
-| ![upload custom icon](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/upload-icon.png) | ![applied icon](https://cdn.josephtalon.ca/images/BrowserDashboard/readme-images/applied-icon.png) |
+| ![upload custom icon](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/upload-icon.png) | ![applied icon](https://jtalon-cdn.nyc3.digitaloceanspaces.com/images/BrowserDashboard/readme-images/applied-icon.png) |
 
 ### Change search engines
 Set a preferred search engine. Any queries typed into the search bar will be redirected to the preferred search engine.
